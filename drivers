@@ -1,0 +1,28 @@
+CREATE TABLE drivers(
+   driver_id INT PRIMARY KEY,
+   first_name VARCHAR(50) NOT NULL,
+   last_name VARCHAR(50) NOT NULL
+);
+
+
+
+INSERT INTO drivers VALUES (1, 'Lando', 'Norris');
+INSERT INTO drivers VALUES (2, 'Max', 'Verstappen');
+INSERT INTO drivers VALUES (3, 'Oscar', 'Piastri');
+INSERT INTO drivers VALUES (4, 'George', 'Russel');
+INSERT INTO drivers VALUES (5, 'Charles', 'Leclerc');
+INSERT INTO drivers VALUES (6, 'Lewis', 'Hamilton');
+INSERT INTO drivers VALUES (7, 'Kimi', 'Antonelli');
+INSERT INTO drivers VALUES (8, 'Alexander', 'Albon');
+INSERT INTO drivers VALUES (9, 'Carlo', 'Sainz');
+INSERT INTO drivers VALUES (10, 'Fernando', 'Alonso');
+INSERT INTO drivers VALUES (11, 'Nico', 'Hülkenberg');
+INSERT INTO drivers VALUES (12, 'Isack', 'Hadjar');
+INSERT INTO drivers VALUES (13, 'Oliver', 'Bearman');
+INSERT INTO drivers VALUES (14, 'Liam', 'Lawson');
+INSERT INTO drivers VALUES (15, 'Esteban', 'Ocon');
+INSERT INTO drivers VALUES (16, 'Lance', 'Stroll');
+INSERT INTO drivers VALUES (17, 'Yuki', 'Tsunoda');
+INSERT INTO drivers VALUES (18, 'Pierre', 'Gasly');
+INSERT INTO drivers VALUES (19, 'Gabriel', 'bortoleto');
+INSERT INTO drivers VALUES (20, 'Franco', 'Colapinto');
