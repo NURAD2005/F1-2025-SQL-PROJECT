@@ -1,138 +1,147 @@
-# 🏎️ F1 2025 Season — SQL Data Analysis
+# Formula 1 SQL Database Project (2023–2025)
 
-This project presents a SQL-based analysis of the **Formula 1**, designed to showcase practical data analytics and SQL skills using a realistic sports dataset.
+## Project Purpose
+This project demonstrates SQL database design and querying skills using real-world Formula 1 data.  
+It models Formula 1 seasons, races, drivers, teams, and race results across the 2023–2025 seasons.
 
-The goal of the project is to simulate how SQL can be used to analyze race performance, compare teams, evaluate pit stop strategy, and extract meaningful insights from structured data.
-
----
-
-## 📌 Project Overview
-
-The dataset represents final race results for the São Paulo Grand Prix, including:
-- Driver finishing positions
-- Teams
-- Total race times
-- Pit stop counts
-- Non-finishers (DNFs)
-
-All data was manually created to mirror a real-world motorsport scenario and to enable analytical querying rather than simple data entry.
+The focus is on:
+- Relational database design
+- Foreign key relationships
+- Data integrity
+- Querying race and season-level statistics
+- Converting race time formats into usable numerical values
 
 ---
 
-## 🗂️ Project Structure
+## Database Overview
 
-f1-season-sql/
-│
-├── README.md
-│
-├── schema/
-│   ├── drivers.sql
-│   ├── teams.sql
-│   ├── races.sql
-│   ├── circuits.sql
-│   ├── results.sql
-│   ├── lap_times.sql
-│   ├── pit_stops.sql
-│   └── standings.sql
-│
-├── data/
-│   ├── drivers.csv
-│   ├── teams.csv
-│   ├── races.csv
-│   ├── results.csv
-│   ├── lap_times.csv
-│   └── pit_stops.csv
-│
-├── inserts/
-│   ├── insert_drivers.sql
-│   ├── insert_teams.sql
-│   ├── insert_races.sql
-│   ├── insert_results.sql
-│   ├── insert_lap_times.sql
-│   └── insert_pit_stops.sql
-│
-├── queries/
-│   ├── race_results.sql
-│   ├── driver_standings.sql
-│   ├── team_standings.sql
-│   ├── fastest_laps.sql
-│   ├── pit_stop_counts.sql
-│   ├── average_lap_times.sql
-│   └── consistency_analysis.sql
-│
-├── views/
-│   ├── v_race_results.sql
-│   ├── v_driver_standings.sql
-│   └── v_team_standings.sql
-│
-└── docs/
-    ├── data_dictionary.md
-    ├── assumptions.md
-    └── known_issues.md
+The database is structured to avoid data duplication and follow normalization best practices.
 
+### Tables Included
+- seasons
+- races
+- drivers
+- teams
+- results
+
+Each table represents a real-world entity in Formula 1 and is connected using foreign keys.
 
 ---
 
-## 🛠️ SQL Skills Demonstrated
+## Design Choices
 
-This project demonstrates the following SQL concepts:
-
-- Database schema design (`CREATE TABLE`)
-- Data insertion and updates (`INSERT`, `UPDATE`)
-- Schema evolution (`ALTER TABLE`)
-- Aggregation and grouping (`GROUP BY`, `AVG`, `COUNT`)
-- Window functions for analytical calculations
-- Derived metrics and safe division using `NULLIF`
-- Filtering and ordering for insight generation
-
----
-
-## 📊 Key Analyses
-
-### 🔹 Team Performance Summary
-- Average race time by team
-- Average number of pit stops per team
-- Team-level comparisons using aggregated metrics
-
-### 🔹 Time Gap Analysis
-- Time difference between each driver and the race winner
-- Calculated using SQL window functions
-
-### 🔹 Pit Stop Efficiency
-- Evaluation of race time relative to pit stop count
-- Identification of potential strategy advantages
-
-### 🔹 DNFs (Did Not Finish)
-- Identification of drivers who did not complete the race
-- Separate handling to avoid skewing performance metrics
+- A single `drivers` table is used instead of one per season to avoid duplication.
+- Seasons are stored separately and referenced by the `races` table.
+- Each race is uniquely identified with `race_id`.
+- Race results are stored in a junction-style table (`results`) linking:
+  - races
+  - drivers
+  - teams
+- Points are stored per race, allowing season totals to be calculated dynamically.
+- Race time is stored in seconds for easier calculations and comparisons.
 
 ---
 
-## 🚀 How to Use This Project
+## Time Conversion Logic
 
-1. Run the SQL script in `data/f1_results.sql` to create and populate the table.
-2. Execute any of the queries in the `queries/` folder to explore the analysis.
-3. (Optional) Connect the dataset to Power BI or another BI tool for visualization.
+Formula 1 race times are often given in formats such as:
 
----
+- `1:35:39.435`
+- `+57.806s`
 
-## 📈 Optional Visualization
+These were converted into seconds using the following logic:
 
-This dataset and its queries are compatible with **Power BI** and other BI tools, enabling:
-- Team performance bar charts
-- Time gap visualizations
-- Pit stop vs race time comparisons
-- Summary KPI dashboards
+- Minutes × 60
+- Hours × 3600
+- Add remaining seconds and milliseconds
 
----
+Example:
+- `1:35:39.435`  
+  = (1 × 3600) + (35 × 60) + 39.435  
+  = 5739.435 seconds
 
-## 🎯 Purpose
-
-This project is intended as a **portfolio example** to demonstrate how SQL can be used to analyze real-world scenarios, apply analytical thinking, and communicate insights clearly.
+Gap times (e.g. `+57.806s`) were added to the winner’s total time to calculate finishing times.
 
 ---
 
-## 📬 Contact
+## Example Queries
 
-If you have questions about this project or suggestions for improvement, feel free to reach out.
+### Total points per driver (all seasons)
+```sql
+SELECT d.first_name, d.last_name, SUM(r.points) AS total_points
+FROM results r
+JOIN drivers d ON r.driver_id = d.driver_id
+GROUP BY d.driver_id
+ORDER BY total_points DESC;
+```
+
+### Points per driver per season
+```sql
+SELECT ra.season, d.first_name, d.last_name, SUM(r.points) AS season_points
+FROM results r
+JOIN races ra ON r.race_id = ra.race_id
+JOIN drivers d ON r.driver_id = d.driver_id
+GROUP BY ra.season, d.driver_id
+ORDER BY ra.season, season_points DESC;
+```
+
+---
+
+## Average Finishing Position Per Driver
+
+```sql
+SELECT d.first_name, d.last_name, AVG(r.position) AS avg_finish
+FROM results r
+JOIN drivers d ON r.driver_id = d.driver_id
+WHERE r.position IS NOT NULL
+GROUP BY d.driver_id
+ORDER BY avg_finish ASC;
+```
+
+This query helps compare driver consistency across seasons.
+
+---
+
+## Challenges Encountered
+
+- Handling `AUTO_INCREMENT` vs manual IDs
+- Foreign key constraint errors when inserting data out of order
+- Ensuring race IDs existed before inserting results
+- Converting race time formats accurately
+- Managing NULL values for DNFs and non-classified drivers
+- Avoiding duplicate driver or team records
+
+---
+
+## Future Improvements
+
+- Add sprint race support
+- Add qualifying results
+- Track fastest laps
+- Add constructor championship calculations
+- Create SQL views for:
+  - Season standings
+  - Driver career totals
+- Build visual dashboards using a BI tool
+
+---
+
+## Skills Demonstrated
+
+- SQL schema design
+- Foreign key relationships
+- Data normalization
+- Time-based calculations
+- Aggregate queries
+- Debugging SQL constraint errors
+- Real-world sports data modeling
+
+---
+
+## Author Notes
+
+This project was built as a learning-focused SQL portfolio piece, emphasizing clarity, correctness, and realistic data structures rather than automation or scraping.
+
+
+
 
