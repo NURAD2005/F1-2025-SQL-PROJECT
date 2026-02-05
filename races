@@ -1,0 +1,89 @@
+CREATE TABLE races (
+   race_id INT PRIMARY KEY,
+   season INT NOT NULL,
+   race_name VARCHAR(100) NOT NULL, 
+   race_date DATE,
+   FOREIGN KEY (season) REFERENCES seasons(season)
+);
+
+INSERT INTO races (race_id, season, race_name, race_date) VALUES
+(301, 2023, 'Bahrain Grand Prix', '2023-03-05'),
+(302, 2023, 'Saudi Arabian Grand Prix', '2023-03-19'),
+(303, 2023, 'Australian Grand Prix', '2023-04-02'),
+(304, 2023, 'Azerbaijan Grand Prix', '2023-04-30'),
+(305, 2023, 'Miami Grand Prix', '2023-05-07'),
+(306, 2023, 'Emilia Romagna Grand Prix', '2023-05-21'),
+(307, 2023, 'Monaco Grand Prix', '2023-05-28'),
+(308, 2023, 'Spanish Grand Prix', '2023-06-04'),
+(309, 2023, 'Canadian Grand Prix', '2023-06-18'),
+(310, 2023, 'Austrian Grand Prix', '2023-07-02'),
+(311, 2023, 'British Grand Prix', '2023-07-09'),
+(312, 2023, 'Hungarian Grand Prix', '2023-07-23'),
+(313, 2023, 'Belgian Grand Prix', '2023-07-30'),
+(314, 2023, 'Dutch Grand Prix', '2023-08-27'),
+(315, 2023, 'Italian Grand Prix', '2023-09-03'),
+(316, 2023, 'Singapore Grand Prix', '2023-09-17'),
+(317, 2023, 'Japanese Grand Prix', '2023-09-24'),
+(318, 2023, 'Qatar Grand Prix', '2023-10-08'),
+(319, 2023, 'United States Grand Prix', '2023-10-22'),
+(320, 2023, 'Mexico City Grand Prix', '2023-10-29'),
+(321, 2023, 'Brazilian Grand Prix', '2023-11-05'),
+(322, 2023, 'Las Vegas Grand Prix', '2023-11-18'),
+(323, 2023, 'Abu Dhabi Grand Prix', '2023-11-26');
+
+
+
+
+
+INSERT INTO races (race_id, season, race_name, race_date) VALUES
+(401, 2024, 'Bahrain Grand Prix', '2024-02-29'),
+(402, 2024, 'Saudi Arabian Grand Prix', '2024-03-07'),
+(403, 2024, 'Australian Grand Prix', '2024-03-22'),
+(404, 2024, 'Japanese Grand Prix', '2024-04-05'),
+(405, 2024, 'Chinese Grand Prix', '2024-04-19'),
+(406, 2024, 'Miami Grand Prix', '2024-05-03'),
+(407, 2024, 'Emilia Romagna Grand Prix', '2024-05-17'),
+(408, 2024, 'Monaco Grand Prix', '2024-05-24'),
+(409, 2024, 'Canadian Grand Prix', '2024-06-07'),
+(410, 2024, 'Spanish Grand Prix', '2024-06-21'),
+(411, 2024, 'Austrian Grand Prix', '2024-06-28'),
+(412, 2024, 'British Grand Prix', '2024-07-05'),
+(413, 2024, 'Hungarian Grand Prix', '2024-07-19'),
+(414, 2024, 'Belgian Grand Prix', '2024-07-26'),
+(415, 2024, 'Dutch Grand Prix', '2024-08-23'),
+(416, 2024, 'Italian Grand Prix', '2024-08-30'),
+(417, 2024, 'Azerbaijan Grand Prix', '2024-09-13'),
+(418, 2024, 'Singapore Grand Prix', '2024-09-20'),
+(419, 2024, 'United States Grand Prix', '2024-10-18'),
+(420, 2024, 'Mexico City Grand Prix', '2024-10-25'),
+(421, 2024, 'Brazilian Grand Prix', '2024-11-01'),
+(422, 2024, 'Las Vegas Grand Prix', '2024-11-21'),
+(423, 2024, 'Qatar Grand Prix', '2024-11-29'),
+(424, 2024, 'Abu Dhabi Grand Prix', '2024-12-01');
+
+
+INSERT INTO races (race_id, season, race_name, race_date) VALUES
+(501, 2025, 'Australian Grand Prix', '2025-03-14'),
+(502, 2025, 'Chinese Grand Prix', '2025-03-21'),
+(503, 2025, 'Japanese Grand Prix', '2025-04-06'),
+(504, 2025, 'Bahrain Grand Prix', '2025-04-13'),
+(505, 2025, 'Saudi Arabian Grand Prix', '2025-04-20'),
+(506, 2025, 'Miami Grand Prix', '2025-05-04'),
+(507, 2025, 'Emilia Romagna Grand Prix', '2025-05-18'),
+(508, 2025, 'Monaco Grand Prix', '2025-05-25'),
+(509, 2025, 'Spanish Grand Prix', '2025-05-30'),
+(510, 2025, 'Canadian Grand Prix', '2025-06-15'),
+(511, 2025, 'Austrian Grand Prix', '2025-06-29'),
+(512, 2025, 'British Grand Prix', '2025-07-06'),
+(513, 2025, 'Belgian Grand Prix', '2025-07-27'),
+(514, 2025, 'Hungarian Grand Prix', '2025-08-03'),
+(515, 2025, 'Dutch Grand Prix', '2025-08-31'),
+(516, 2025, 'Italian Grand Prix', '2025-09-07'),
+(517, 2025, 'Azerbaijan Grand Prix', '2025-09-21'),
+(518, 2025, 'Singapore Grand Prix', '2025-10-03'),
+(519, 2025, 'United States Grand Prix', '2025-10-17'),
+(520, 2025, 'Mexico City Grand Prix', '2025-10-24'),
+(521, 2025, 'Brazilian Grand Prix', '2025-11-09'),
+(522, 2025, 'Las Vegas Grand Prix', '2025-11-20'),
+(523, 2025, 'Qatar Grand Prix', '2025-11-28'),
+(524, 2025, 'Abu Dhabi Grand Prix', '2025-12-05');
